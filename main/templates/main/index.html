@@ -1,0 +1,64 @@
+{% extends "main/base.html" %}
+
+{% load static %}
+
+{% block title %} Main Page - Flower Shop {% endblock %}
+
+
+{% block body %}
+
+<div class="header">
+    <span class="logo">Мой Магазин</span>
+    <a href="{% url 'main:login_page' %}" class="exit-link">Войти</a>
+</div>
+
+<div class="container">
+    
+    <h1> Доро пожаловать FlowerShop! </h1>
+    
+    
+
+    
+    <img src="{% static 'main/balzhanym.jpg' %}" width="450" alt="Portrait of Bakonay">
+    <p style="text-align: center;">
+        <a href="{% url 'main:header_page' %}">📋 View Filtered Products →</a>
+    </p>
+
+    <h2 style="color: #667eea; margin-top: 30px;">👥 Our Owners</h2>
+    {% if owners %}
+      {% for o in owners %}
+        <div class="owner-card">
+          {% if o.avatar %}
+            <img src="{{ o.avatar.url }}" alt="{{ o.full_name }}">
+          {% endif %}
+          <p><a href="{% url 'main:detail_page' o.id %}">{{o.full_name}}</a></p>
+          
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="no-items">No owners yet in our shop</p>
+    {% endif %}
+
+    <h2 style="color: #667eea; margin-top: 30px;">🌺 Featured Product</h2>
+    {% if product2 %}
+      <div class="product-card">
+        <h5>Product Name: {{ product2.name }}</h5>
+        <h5>Description: {{ product2.description }}</h5>
+        <h5>Price: ${{ product2.cost }}</h5>
+        <h5>Rating: ⭐ {{ product2.rating }}</h5>
+        <h5>Owner: {{ product2.owner }}</h5>
+      </div>
+    {% else %}
+      <p class="no-items">Все распродона</p>
+    {% endif %}
+
+    <h2 style="color: #667eea; margin-top: 30px;">➕ Add New Owner</h2>
+    <form action="{% url 'main:index_page' %}" method="post" enctype="multipart/form-data">
+      {% csrf_token %}  
+      <input type="text" name="full_name" placeholder="Enter your full name" required>
+      <input type="file" name="avatar">
+      <input type="submit" name="submit" value="Add Owner">
+    </form>
+</div>
+{% endblock %}
+

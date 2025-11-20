@@ -1,0 +1,39 @@
+{% extends "main/base.html" %}
+
+{% load static %}
+
+{% block title %} Owner Details - {{ owner.full_name }} {% endblock %}
+
+{% block body %}
+<div class="container">
+  {% if owner %}
+    <h1>👤 Owner Profile</h1>
+    <div class="owner-card">
+      {% if owner.avatar %}
+        <img src="{{ owner.avatar.url }}" alt="{{ owner.full_name }}">
+      {% endif %}
+      <h2>{{ owner.full_name }}</h2>
+      
+      <h3 style="color: #667eea; margin-top: 30px;">📦 Products by this owner:</h3>
+      {% if owner.product_set.all %}
+        {% for product in owner.product_set.all %}
+          <div class="product-card">
+            <h4>{{ product.name }}</h4>
+            <p><strong>Description:</strong> {{ product.description }}</p>
+            <p><strong>Price:</strong> ${{ product.cost }}</p>
+            <p><strong>Rating:</strong> ⭐ {{ product.rating }}</p>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="no-items">This owner has no products yet</p>
+      {% endif %}
+      
+      <p style="text-align: center; margin-top: 20px;">
+        <a href="{% url 'main:index_page' %}">← Back to main page</a>
+      </p>
+    </div>
+  {% else %}
+    <p class="no-items">Owner not found</p>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "main/base.html" %}
+
+{% load static %}
+
+{% block title %} Main Page - Alt {% endblock %}
+
+
+{% block body %}
+<p>Checking Classes</p>
+
+<a href="{% url 'main:index2_page' %}">Link to page 2</a>
+{% endblock %}

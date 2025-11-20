@@ -1,0 +1,99 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %} Profile - {{ user.username }} {% endblock %}
+
+{% block body %}
+
+<div class="header">
+    <span class="logo">Flower Shop</span>
+    <div>
+        <a href="{% url 'main:header_page' %}" style="margin-right: 15px;">Главная</a>
+        <a href="{% url 'main:logout_page' %}" class="exit-link">Выйти</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="profile-header">
+        <div class="profile-avatar">
+            <div class="avatar-circle">
+                {{ user.username|first|upper }}
+            </div>
+        </div>
+        <div class="profile-info">
+            <h1>👤 {{ user.first_name }} {{ user.last_name }}</h1>
+            <p class="username">@{{ user.username }}</p>
+            <p class="email">📧 {{ user.email }}</p>
+        </div>
+    </div>
+
+    <div class="profile-stats">
+        <div class="stat-card">
+            <h3>{{ owners_count }}</h3>
+            <p>Владельцев создано</p>
+        </div>
+        <div class="stat-card">
+            <h3>{{ products_count }}</h3>
+            <p>Всего продуктов</p>
+        </div>
+        <div class="stat-card">
+            <h3>Активен</h3>
+            <p>Статус</p>
+        </div>
+    </div>
+
+    <div class="profile-section">
+        <h2>🛠️ Быстрые действия</h2>
+        <div class="actions-grid">
+            <a href="{% url 'main:index_page' %}" class="action-card">
+                <span class="action-icon">➕</span>
+                <h3>Добавить владельца</h3>
+                <p>Создать нового владельца магазина</p>
+            </a>
+            
+            <a href="{% url 'main:header_page' %}" class="action-card">
+                <span class="action-icon">📦</span>
+                <h3>Просмотреть продукты</h3>
+                <p>Посмотреть все продукты</p>
+            </a>
+            
+            <a href="{% url 'main:header_page' %}" class="action-card">
+                <span class="action-icon">👥</span>
+                <h3>Владельцы</h3>
+                <p>Управление владельцами</p>
+            </a>
+        </div>
+    </div>
+
+    <div class="profile-section">
+        <h2>📋 Информация об аккаунте</h2>
+        <div class="info-box">
+            <div class="info-row">
+                <span class="info-label">Имя пользователя:</span>
+                <span class="info-value">{{ user.username }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Имя:</span>
+                <span class="info-value">{{ user.first_name }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Фамилия:</span>
+                <span class="info-value">{{ user.last_name }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Email:</span>
+                <span class="info-value">{{ user.email }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Дата регистрации:</span>
+                <span class="info-value">{{ user.date_joined|date:"d.m.Y" }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Последний вход:</span>
+                <span class="info-value">{{ user.last_login|date:"d.m.Y H:i" }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
